@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<h2>Enter Flight Details</h2>
+<form action="/flights" method="POST">
+  <label>Airline:
+    <select name="airline">
+  <option value="American">American</option>
+  <option value="Southwest">Southwest</option>
+  <option value="United">United</option>
+  <option value="Delta">Delta</option>
+  <option value="JetBlue">JetBlue</option>
+  <option value="Emirates">Emirates</option>
+</select>
+  </label><br>
+  <label>Airport:
+    <select name="airport">
+  <option value="SMF">Sacramento International Airport (SMF)</option>
+  <option value="SCK">Stockton Metropolitan Airport (SCK)</option>
+  <option value="MHR">Sacramento Mather Airport (MHR)</option>
+  <option value="OAK">Oakland International Airport (OAK)</option>
+  <option value="SFO">San Francisco International Airport (SFO)</option>
+  <option value="STS">Charles M. Schulz - Sonoma County Airport (STS)</option>
+  <option value="SJC">Norman Y. Mineta San Jose International Airport (SJC)</option>
+  <option value="RNO">Reno-Tahoe International Airport (RNO)</option>
+</select>
+  </label><br>
+  <label>Flight Number:
+    <input type="number" name="flightNo">
+  </label><br>
+  <label>Departure Date:
+    <input type="datetime-local" name="departs">
+  <br>
+  <button type="submit">Add Flight</button>
+</form>
+<p><%= errorMsg %></p>
+
+
+<%- include('../partials/footer') %>
