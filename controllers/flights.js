@@ -4,6 +4,8 @@ module.exports = {
   index,
   new: newFlight,
   create,
+  show,
+  createDestination,
 };
 
 async function index(req, res) {
@@ -31,5 +33,32 @@ async function create(req, res) {
   } catch (err) {
     console.log(err);
     res.render("flights/new", { errorMsg: err.message });
+  }
+}
+async function show(req, res) {
+  try {
+    const flight = await Flight.findById(req.params.id);
+    if (!flight) {
+      return res.status(404).send("Flight not found");
+    }
+    res.render("flights/show", { flight });
+  } catch (error) {
+    console.log(error);
+    res.redirect("/flights");
+  }
+}
+async function createDestination(req, res) {
+  try {
+    const flight = await Flight.findById(req.params.id);
+    if (!flight) {
+      return res.status(404).send("Flight not found");
+    }
+    const { airport, arrival } = req.body;
+    flight.destinations.push({ airport, arrival });
+    await flight.save();
+    res.redirect(`/flights/${flight._id}`);
+  } catch (error) {
+    console.log(error);
+    res.redirect("/flights");
   }
 }
