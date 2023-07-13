@@ -1,50 +1,80 @@
 <%- include('../partials/header') %>
-
-<div class="container">
-  <h2>Flight Details</h2>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Airline: <%= flight.airline %></h5>
-      <p class="card-text">Airport: <%= flight.airport %></p>
-      <p class="card-text">Flight Number: <%= flight.flightNo %></p>
-      <p class="card-text">Departs: <%= flight.departs %></p>
+  <!--  -->
+  <div class="container">
+    <h2>Flight Details</h2>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Airline: <%= flight.airline %>
+        </h5>
+        <p class="card-text">Airport: <%= flight.airport %>
+        </p>
+        <p class="card-text">Flight Number: <%= flight.flightNo %>
+        </p>
+        <p class="card-text">Departs: <%= flight.departs %>
+        </p>
+      </div>
     </div>
+    <!--  -->
+    <h3>Destinations:</h3>
+    <ul class="list-group">
+      <% flight.destinations.forEach(function(destination) { %>
+        <li class="list-group-item">
+          <strong>Airport:</strong>
+          <%= destination.airport %><br>
+            <strong>Arrival:</strong>
+            <%= destination.arrival %>
+        </li>
+        <% }); %>
+    </ul>
+
+    <a href="/flights" class="btn btn-primary mt-3">Back to Flights</a>
   </div>
+  <!--  -->
+  <h3>Tickets</h3>
+  <% if (tickets.length> 0) { %>
+    <ul>
+      <% tickets.forEach(function(ticket) { %>
+        <li>Seat: <%= ticket.seat %>, Price: <%= ticket.price %>
+        </li>
+        <% }); %>
+    </ul>
+    <% } else { %>
+      <p>No tickets found for this flight.</p>
+      <% } %>
+        <form action="/flights/<%= flight._id %>/tickets" method="POST">
+          <div class="form-group">
+            <label for="seat">Seat (Ex. D6) </label>
+            <input type="text" id="seat" name="seat" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="price">Price: (US Dollar) </label>
+            <input type="number" id="price" name="price" class="form-control" min="0" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create Ticket</button>
+        </form>
 
-  <h3>Destinations:</h3>
-  <ul class="list-group">
-    <% flight.destinations.forEach(function(destination) { %>
-      <li class="list-group-item">
-        <strong>Airport:</strong> <%= destination.airport %><br>
-        <strong>Arrival:</strong> <%= destination.arrival %>
-      </li>
-    <% }); %>
-  </ul>
-
-  <a href="/flights" class="btn btn-primary mt-3">Back to Flights</a>
-</div>
-<h4>Add Destination</h4>
-  <form action="/flights/<%= flight._id %>/destinations" method="POST">
-    <div class="form-group">
-      <label for="airport">Airport:</label>
-      <select class="form-control" id="airport" name="airport">
-        <option value="SMF">Sacramento International Airport (SMF)</option>
-        <option value="SCK">Stockton Metropolitan Airport (SCK)</option>
-        <option value="MHR">Sacramento Mather Airport (MHR)</option>
-        <option value="OAK">Oakland International Airport (OAK)</option>
-        <option value="SFO">San Francisco International Airport (SFO)</option>
-        <option value="STS">Charles M. Schulz - Sonoma County Airport (STS)</option>
-        <option value="SJC">Norman Y. Mineta San Jose International Airport (SJC)</option>
-        <option value="RNO">Reno-Tahoe International Airport (RNO)</option>
-      </select>
-    </div>
-  <div class="form-group">
-      <label for="arrival">Arrival Date/Time:</label>
-      <input class="form-control" type="datetime-local" id="arrival" name="arrival" required>
-    </div>
-    <button class="btn btn-primary" type="submit">Add Destination</button>
-  </form>
-</div>
+        <h4>Add Destination</h4>
+        <form action="/flights/<%= flight._id %>/destinations" method="POST">
+          <div class="form-group">
+            <label for="airport">Airport:</label>
+            <select class="form-control" id="airport" name="airport">
+              <option value="SMF">Sacramento International Airport (SMF)</option>
+              <option value="SCK">Stockton Metropolitan Airport (SCK)</option>
+              <option value="MHR">Sacramento Mather Airport (MHR)</option>
+              <option value="OAK">Oakland International Airport (OAK)</option>
+              <option value="SFO">San Francisco International Airport (SFO)</option>
+              <option value="STS">Charles M. Schulz - Sonoma County Airport (STS)</option>
+              <option value="SJC">Norman Y. Mineta San Jose International Airport (SJC)</option>
+              <option value="RNO">Reno-Tahoe International Airport (RNO)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="arrival">Arrival Date/Time:</label>
+            <input class="form-control" type="datetime-local" id="arrival" name="arrival" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Add Destination</button>
+        </form>
+        </div>
 
 
-<%- include('../partials/footer') %>
+        <%- include('../partials/footer') %>
